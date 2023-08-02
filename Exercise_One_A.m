@@ -14,7 +14,7 @@ set(gca,'XLim',[0 0.000002]);
 modulated_signal = (1 + (modulation_index*normalised_message_signal)).*carrier_signal;
 subplot(4,1,3);
 plot(t,modulated_signal);
-set(gca,'XLim',[0 0.0001]);
+set(gca,'XLim',[0 0.1]);
 
 M = fftshift(fft(modulated_signal)); 
 n = length(modulated_signal) - 1;
