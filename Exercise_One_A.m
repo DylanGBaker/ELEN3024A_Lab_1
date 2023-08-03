@@ -1,5 +1,5 @@
 function x = Exercise_One_A()
-fs = 10000000;
+fs = 20000000;
 t = 0:1/fs:0.1;
 modulation_index = 0.70;
 normalised_message_signal =  (0.4408004937)*cos(100*pi*t) + (0.3306003703)*sin(200*pi*t) + (0.3306003703)*sin(300*pi*t);
@@ -23,4 +23,5 @@ f = -fs/2:df:fs/2;
 subplot(4,1,4);
 plot(f,abs(M)/n);
 set(gca,'XLim',[999000 1001000]);
+x = 7;
 end
