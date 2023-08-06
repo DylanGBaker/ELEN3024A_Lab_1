@@ -1,39 +1,39 @@
 function x = testing_stuff_for_two()
-% Need to make x(t) using a step function made with time ranges.
-t1 = -10:0.0001:0.5;
-t2 = 0.5: 0.0001:10;
-t = [t1 t2];
+fs = 4000000;
+index = 1;
+lengthOfTime = -3:1/fs:5;
 
-%Fill an array with zeroes and ones to represent a step function at time t
-% = 0.5
+t = zeros(size(lengthOfTime));
+f = zeros(size(lengthOfTime));
+xt = zeros(size(lengthOfTime));
+for i = -3:1/fs:5
+    t(index) = i;
+    if i >= 0.5
+        xt(index) = exp(-(i-0.5));
+    else
+        xt(index) = 0;
+    end
+    index = index + 1;
+end
+Xf = fft(xt);
+plo
+index = 1;
 
-xFuncZerosRange = zeros(size(t1));
-xFuncOnesRange = ones(size(t2));
+Hf = zeros(size(lengthOfTime));
+for i = -3:1/fs:5
+    f(index) = i;
+    if i >= -1.5 && i <= 1.5
+        Hf(index) = cos((pi * i)/3); 
+    else
+        Hf(index) = 0;
+    end
+    index = index + 1;
+end
 
-x1 = exp(-(t1 - 0.5)) .* xFuncZerosRange;
-x2 = exp(-(t2 - 0.5)) .* xFuncOnesRange;
+Mf = Xf .* Hf;
+mt = ifft(Mf);
 
-x_t = [x1 x2];
-
-X_f = fftshift(fft(x_t));
-
-%Freqeuncy ranges for H(f)
-f1 = -10:0.0001:-1.5;
-f2 = -1.5:0.0001:1.5;
-f3 = 1.5:0.0001:10;
-f = [f1 f2 f3];
-
-hFuncZerosRange = zeros(size(f1));
-hFuncOnesRange = ones(size(f2));
-
-H1 = cos((pi * f1)/3) .* hFuncZerosRange;
-H2 = cos((pi * f2)/3) .* hFuncOnesRange;
-H3 = cos((pi * f3)/3) .* hFuncZerosRange;
-
-H_f = [H1 H2 H3];
-% Message signal is obtained by multiplying X_f with H_f. That will be the
-% frequency domain representation of m(t).
-
-M_f = X_f .* H_f;
-
+ct_t = -3:1/fs:5;
+ct = cos(2 * pi * 1000000 * ct_t);
+ut = mt .* ct;
 end
