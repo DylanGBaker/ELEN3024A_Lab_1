@@ -36,9 +36,9 @@ ct_t = -3:1/fs:5;
 ct = cos(2 * pi * 1000000 * ct_t);
 ut = mt .* ct;
 
-%n = length(ut) - 1;
-%df = fs/n;
-%f = -fs/2:df:fs/2;
-%plot(f, abs(ut)/n);
-%set(gca,'XLim',[-10 10]);
+n = length(ut) - 1;
+df = fs/n;
+f = -fs/2:df:fs/2;
+plot(f, abs(ut)/n);
+set(gca,'XLim',[-10 10]);
 end
