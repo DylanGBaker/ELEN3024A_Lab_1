@@ -15,13 +15,7 @@ for i = -3:1/fs:5
     end
     index = index + 1;
 end
-Xf = fftshift(fft(xt));
-n = length(Xf) - 1;
-df = fs/n;
-f = -fs/2:df:fs/2;
-subplot(4,1,1);
-plot(f, abs(Xf)/n);
-set(gca,'XLim',[-10 10]);
+Xf = fft(xt);
 index = 1;
 
 Hf = zeros(size(lengthOfTime));
@@ -35,21 +29,9 @@ for i = -3:1/fs:5
     index = index + 1;
 end
 
-subplot(4,1,2);
-plot(f, Hf);
-set(gca,'XLim',[-10 10]);
-
 Mf = Xf .* Hf;
 
-n = length(Mf) - 1;
-df = fs/n;
-f = -fs/2:df:fs/2;
-subplot(4,1,3);
-plot(f, abs(Mf)/n);
-set(gca,'XLim',[-10 10]);
-
 mt = ifftshift(ifft(Mf));
-%plot(t,abs(mt));
 ct_t = -3:1/fs:5;
 ct = cos(2 * pi * 1000000 * ct_t);
 ut = mt .* ct;
