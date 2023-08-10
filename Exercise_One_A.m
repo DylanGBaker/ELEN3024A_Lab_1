@@ -1,4 +1,4 @@
-function x = Exercise_One_A()
+function Exercise_One_A()
 fs = 20000000;
 t = 0:1/fs:0.1;
 modulation_index = 0.70;
@@ -23,5 +23,4 @@ f = -fs/2:df:fs/2;
 subplot(4,1,4);
 plot(f,abs(M)/n);
 set(gca,'XLim',[999000 1001000]);
-x = 7;
 end

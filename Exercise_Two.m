@@ -1,4 +1,4 @@
-function x = Exercise_Two()
+function Exercise_Two()
 fs = 400;
 index = 1;
 lengthOfTime = 0:1/fs:10;
