@@ -1,4 +1,4 @@
-fs = 100;
+fs = 1000;
 index = 1;
 lengthOfTime = 0:1/fs:10;
 
@@ -47,11 +47,11 @@ title("Hf")
 %get the message signal.
 
 Mf = Xf .* Hf;
-mt = ifft(fftshift(Mf)); %Getting inverse of the FFT but shifting the values back so the calculation is correct for the modulation.
+mt = ifft(ifftshift(Mf)) * fs; %Getting inverse of the FFT but shifting the values back so the calculation is correct for the modulation.
 
 %Plotting magnitude spectrum of M(f) but I have to divide by the length - 1 to get the correct magnitude values
 figure(3)
-stem(f, abs(Mf));
+plot(f, Mf);
 %(length(Mf) - 1)
 %Plotting the phase of M(f) but limiting the freqeuncy range to show the
 % first few frequencies phases due to the repetition of the phase for the
