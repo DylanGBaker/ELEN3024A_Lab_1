@@ -1,13 +1,11 @@
 function Exercise_Two()
-fs = 100;
+fs = 1000;
 index = 1;
 lengthOfTime = 0:1/fs:10;
 
 %Initialising arrays.
 t = zeros(size(lengthOfTime));
-f = zeros(size(lengthOfTime));
 xt = zeros(size(lengthOfTime));
-Hf = zeros(size(lengthOfTime));
 
 %Loop to input values for x(t). This is to represent the function as if it
 %was multipled by a unit step function that started at x = 0.5.
@@ -24,26 +22,22 @@ end
 % of the array.
 
 Xf = fftshift(fft(xt)); 
-index = 1;
-figure(40)
-plot(t,xt)
-xlim([0 3])
 
 %Loop to input values for H(f). This is to represent the function as if it
 %was multiplied by a rect function to sit within the bandwidths.
-for i = -5:1/fs:5
-    f(index) = i;
-    if i <= 1.5 && i >= -1.5
-        Hf(index) = cos((pi * i)/3); 
+length_f = length(Xf);
+f = (-length_f/2:length_f/2-1)/length_f*fs;
+
+for i = 1:size(f,2)
+    if f(i) >= -1.5 && f(i) <= 1.5
+        Hf(i) = cos((pi * f(i))/3);
     else
-        Hf(index) = 0;
+        Hf(i) = 0;
     end
-    index = index + 1;
 end
-figure(10)
-plot(f,abs(Xf)/(length(Xf) - 1))
-figure(11)
-plot(f, Hf)
+figure(1)
+plot(f,abs(Xf))
+title("Xf")
 %H(f) is the transfer function in the frequency domain and so getting the
 %FFT of x(t) will allow me to multiply the two in the frequency domain to
 %get the message signal.
