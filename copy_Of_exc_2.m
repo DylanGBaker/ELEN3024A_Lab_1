@@ -32,6 +32,11 @@ Mf_spect = Xf .* Hf;
 figure(10)
 plot(f,abs(Mf_spect)/length(xt))
 xlim([-10 10])
+
+mt_test = ifft(ifftshift(Mf_spect));
+figure(41)
+plot(t,mt_test)
+title("why")
 %Going to use convolution in the time domain as when two frequency domain
 %signals are multiplied matlab does circular convolution which is most
 %likely leading to the incorrect m(t) signal. Convolution is giving the
