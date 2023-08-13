@@ -50,4 +50,27 @@ xlabel("Frequency(Hz)")
 ylabel("|U(f)|")
 %Limiting frequency so that the positive components can be seen properly
 set(gca,'XLim',[999000 1001000]);
+
+
+
+%Now need to get the envelope of the modulated signal m(t). Using matlab
+%hilbert function. Sourced from https://uk.mathworks.com/help/signal/ug/envelope-extraction-using-the-analytic-signal.html
+
+y = hilbert(modulated_signal);
+env = abs(y);
+figure(5)
+plot(t,env);
+title("Graph showing the envelope of the modulated signal with respect to time")
+xlabel("Time(s)")
+ylabel("d(t)")
+
+%Find period
+[~,peak_locations] = findpeaks(env,t);
+period = max(diff(peak_locations));
+disp(period);
+
+%fft_env = fft(env);
+%env_phase = angle(fft_env);
+%figure(6)
+%plot(f,env_phase)
 end
