@@ -68,11 +68,8 @@ ylabel("d(t)")
 %subtracting the time values to get the period. The freqeuncy is then
 %1/period.
 
-%Removing DC component of about 0.7.
 original_message_signal = env - 0.7;
 figure(6)
 plot(t,original_message_signal);
-title("Envelope signal with DC component removed")
-xlabel("Time(s)")
-ylabel("d(t)")
+title("")
 end
