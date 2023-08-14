@@ -29,14 +29,16 @@ end
 
 Xf = fftshift(fft(xt));
 Mf_spect = Xf .* Hf;
-figure(10)
-plot(f,abs(Mf_spect)/length(xt))
+figure(1)
+plot(f,abs(Mf_spect)/(length(xt) - 1))
 xlim([-10 10])
 
 phase = angle(Mf_spect);
-figure(30)
+figure(2)
 plot(f, phase);
-title("angle bleh")
+title("Graph showing the phase spectrum of the message signal")
+xlabel("Frequency(Hz)")
+ylabel("Phase(radians)")
 xlim([-10 10])
 %Going to use convolution in the time domain as when two frequency domain
 %signals are multiplied matlab does circular convolution which is most
@@ -44,25 +46,25 @@ xlim([-10 10])
 %correct signal. Start by getting the inverse fourier transform of H(f).
 ht = ifft(ifftshift(Hf));
 mt = conv(xt,ht);
-figure(1)
+figure(3)
 plot(t,mt(1:length(xt)))
 title("Graph showing the convolution between the input signal x(t) and the lowpass filter h(t)")
 xlabel("Time(s)")
 ylabel("m(t)")
 
-%Mf = fftshift(fft(mt(1:length(xt))));
-%n = length(xt);
-%for i = 1:size(Mf,2)
-   % if abs(Mf(i))/n <= 0.01
-  %      Mf(i) = 0;
- %   end
-%end
-
 ct = cos(2 * pi * 10 * t); %Setting up the carrier signal. 10Hz is used for demonstration purposes so that the signal can be seen.
 ut = mt(1:length(xt)) .* ct;
 
-figure(5)
+figure(4)
 plot(t,ut)
 title("Graph showing the modulated signal with respect to time")
 xlabel("Time(s)")
 ylabel("u(t)")
+
+Uf = fftshift(fft(ut));
+figure(5)
+plot(f, abs(Uf)/(length(Uf) - 1))
+title("Graph showing the frequency spectrum of the modulated signal")
+xlabel("Frequency(Hz)")
+ylabel("|U(f)|")
+xlim([-20 20])

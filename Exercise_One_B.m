@@ -38,5 +38,4 @@ set(gca,'XLim',[999000 1001000]);
 phase_spectrum = angle(M);
 figure(3)
 plot(f,phase_spectrum);
-
 end
