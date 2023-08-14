@@ -1,4 +1,3 @@
-function Exercise_Two()
 fs = 1000;
 index = 1;
 lengthOfTime = 0:1/fs:10;
@@ -18,61 +17,52 @@ for i = 0:1/fs:10
     end
     index = index + 1;
 end
-%FFT to get the discrete fourier transform and shifted so that the zero frequency component is in the centre
-% of the array.
 
-Xf = fftshift(fft(xt)); 
-
-%Loop to input values for H(f). This is to represent the function as if it
-%was multiplied by a rect function to sit within the bandwidths.
-length_f = length(Xf);
+length_f = length(xt);
 f = (-length_f/2:length_f/2-1)/length_f*fs;
-
+Hf = zeros(size(f));
 for i = 1:size(f,2)
     if f(i) >= -1.5 && f(i) <= 1.5
         Hf(i) = cos((pi * f(i))/3);
-    else
-        Hf(i) = 0;
     end
 end
-figure(1)
-plot(f,abs(Xf))
-title("Xf")
-%H(f) is the transfer function in the frequency domain and so getting the
-%FFT of x(t) will allow me to multiply the two in the frequency domain to
-%get the message signal.
 
-Mf = Xf .* Hf;
-mt = ifft(ifftshift(Mf)); %Getting inverse of the FFT but shifting the values back so the calculation is correct for the modulation.
+Xf = fftshift(fft(xt));
+Mf_spect = Xf .* Hf;
+figure(10)
+plot(f,abs(Mf_spect)/length(xt))
+xlim([-10 10])
 
-%Plotting magnitude spectrum of M(f) but I have to divide by the length - 1 to get the correct magnitude values
+phase = angle(Mf_spect);
+figure(30)
+plot(f, phase);
+title("angle bleh")
+xlim([-10 10])
+%Going to use convolution in the time domain as when two frequency domain
+%signals are multiplied matlab does circular convolution which is most
+%likely leading to the incorrect m(t) signal. Convolution is giving the
+%correct signal. Start by getting the inverse fourier transform of H(f).
+ht = ifft(ifftshift(Hf));
+mt = conv(xt,ht);
 figure(1)
-stem(f, abs(Mf));
-%(length(Mf) - 1)
-%Plotting the phase of M(f) but limiting the freqeuncy range to show the
-% first few frequencies phases due to the repetition of the phase for the
-% frequncy domain representation of M(f)
-figure(2)
-stem(f,angle(Mf));
-xlim([0 0.2]);
+plot(t,mt(1:length(xt)))
+title("Graph showing the convolution between the input signal x(t) and the lowpass filter h(t)")
+xlabel("Time(s)")
+ylabel("m(t)")
+
+%Mf = fftshift(fft(mt(1:length(xt))));
+%n = length(xt);
+%for i = 1:size(Mf,2)
+   % if abs(Mf(i))/n <= 0.01
+  %      Mf(i) = 0;
+ %   end
+%end
 
 ct = cos(2 * pi * 10 * t); %Setting up the carrier signal. 10Hz is used for demonstration purposes so that the signal can be seen.
-ut = mt .* ct; %Performing the modulation.
+ut = mt(1:length(xt)) .* ct;
 
-figure(3)
-plot(t,mt);
-xlim([0 10])
-
-%Obtain the FFT of u(t) so that the frequency spectra can be plotted.
-
-Uf = fftshift(fft(ut));
-
-figure(4)
-plot(f,abs(Uf)/(length(Uf) - 1));
-
-%Testing convolution
-ht = ifft(ifftshift(Hf));
-m_test_conv_t = conv(xt,ht);
-figure(41)
-plot(t,m_test_conv_t(1:length(xt)))
-end
+figure(5)
+plot(t,ut)
+title("Graph showing the modulated signal with respect to time")
+xlabel("Time(s)")
+ylabel("u(t)")

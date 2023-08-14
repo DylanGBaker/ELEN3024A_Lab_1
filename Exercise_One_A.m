@@ -64,13 +64,7 @@ title("Graph showing the envelope of the modulated signal with respect to time")
 xlabel("Time(s)")
 ylabel("d(t)")
 
-%Find period
-[~,peak_locations] = findpeaks(env,t);
-period = max(diff(peak_locations));
-disp(period);
-
-%fft_env = fft(env);
-%env_phase = angle(fft_env);
-%figure(6)
-%plot(f,env_phase)
+%Find period. Using graphical methods. Choosing two peak values and
+%subtracting the time values to get the period. The freqeuncy is then
+%1/period.
 end
