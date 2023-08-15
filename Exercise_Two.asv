@@ -34,14 +34,6 @@ plot(f, abs(Xf)/(length(Xf) - 1))
 title("Graph showing the magnitude spectrum of X(f)")
 xlabel("Frequency(Hz)")
 ylabel("|X(f)|")
-xlim([-20 20])
-
-figure(7)
-plot(f, abs(Hf)/(length(Hf) - 1))
-title("Graph showing the magnitude spectrum of H(f)")
-xlabel("Frequency(Hz)")
-ylabel("|H(f)|")
-xlim([-10 10])
 
 
 Mf_spect = Xf .* Hf; 
