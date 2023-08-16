@@ -6,8 +6,8 @@ lengthOfTime = 0:1/fs:10;
 t = zeros(size(lengthOfTime));
 xt = zeros(size(lengthOfTime));
 
-%Loop to input values for x(t). This is to represent the function as if it
-%was multipled by a unit step function that started at x = 0.5.
+%Loop the input values for x(t). This is to represent the function as if it
+%was multipled by a unit step function that started at t = 0.5.
 for i = 0:1/fs:10
     t(index) = i;
     if i >= 0.5
@@ -18,7 +18,7 @@ for i = 0:1/fs:10
     index = index + 1;
 end
 
-%Getting the frequency spectrum based for H(f).
+%Getting the frequency spectrum for H(f).
 length_f = length(xt);
 f = (-length_f/2:length_f/2-1)/length_f*fs;
 Hf = zeros(size(f));
@@ -37,7 +37,7 @@ ylabel("|X(f)|")
 xlim([-20 20])
 
 figure(7)
-plot(f, abs(Hf)/(length(Hf) - 1))
+plot(f, abs(Hf))
 title("Graph showing the magnitude spectrum of H(f)")
 xlabel("Frequency(Hz)")
 ylabel("|H(f)|")
