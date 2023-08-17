@@ -45,7 +45,7 @@ df = fs/n;
 f = -fs/2:df:fs/2;
 figure(4)
 plot(f,abs(M)/n);
-title("Graph showing the frequency spectrum of the modulated signal")
+title("Graph showing the magnitude spectrum of the modulated signal")
 xlabel("Frequency(Hz)")
 ylabel("|U(f)|")
 %Limiting frequency so that the positive components can be seen properly
